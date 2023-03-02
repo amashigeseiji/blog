@@ -1,0 +1,17 @@
+{
+  "name": "blog",
+  "version": "0.1.0",
+  "description": "blog for tenjuu99",
+  "main": "index.js",
+  "scripts": {
+    "generate": "node generate.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AmashigeSeiji",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^10.0.0",
+    "marked": "^4.2.12"
+  },
+  "type": "module"
+}

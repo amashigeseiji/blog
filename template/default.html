@@ -1,10 +1,72 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  {if gtag_id}
+  {include('./template/gtag.html')}
+  {/if}
   <meta charset="UTF-8">
-  <title>{{TITLE}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} | tenjuu99@blog</title>
+  <meta name="robots" content="noindex" />
+  <style>
+  {include('./css/layout.css')}
+  {include('./css/reset.css')}
+  </style>
+  <link rel="preload" href="${/css/generate.css:/css/page.css,/css/markdown.css}" as="style">
+  <link rel="stylesheet" href="${/css/generate.css:/css/page.css,/css/markdown.css}" media="print" onload="this.media='all'">
 </head>
 <body>
-  {{MARKDOWN}}
+  <header class="container">
+    <p><a href="/">tenjuu99@blog</a></p>
+  </header>
+  <main class="container">
+    <article>
+      <h1>{{TITLE}}</h1>
+      {if published}
+      <aside class="published">
+        <p>投稿: {script}return helper.dateFormat(variables.published){/script}
+      {/if}
+        {if modified} / 更新: {script}return helper.dateFormat(variables.modified){/script}{/if}
+        {if published}
+        </p>
+      </aside>
+      {/if}
+      {{MARKDOWN}}
+    </article>
+  </main>
+  {script}
+  if (!variables.index) {
+    return ''
+  }
+  return helper.readIndex()
+    .then(index => index.sort((a, b) => new Date(b.published) - new Date(a.published)))
+    .then(index => {
+      let prev = '', next = '', current = false
+      for (const page of index) {
+        if (!page.index) {
+          continue
+        }
+        if (current) {
+          prev = `<li class="prevNext__prev"><a href="${page.url}">[prev]${page.title}</a></li>`
+          break
+        }
+        if (variables.name === page.name) {
+          current = true
+          continue
+        }
+        next = `<li class="prevNext__next"><a href="${page.url}">[next]${page.title}</a></li>`
+      }
+      if (next || prev) {
+        return `<ul class="container prevNext">${prev ? prev : '<li></li>'}${next ? next : '<li></li>'}</ul>`
+      }
+      return ''
+    })
+  {/script}
+  <footer class="container">
+    <ul>
+      <li><a href="/about">about</a></li>
+      <li><a href="/privacy_policy">プライバシーポリシー</a></li>
+    </ul>
+  </footer>
 </body>
 </html>

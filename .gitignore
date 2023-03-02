@@ -1,1 +1,5 @@
 node_modules/
+dist/*
+!.gitignore
+!favicon.ico
+data/index.json

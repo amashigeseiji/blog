@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>tenjuu99@blog</title>
+  <meta name="robots" content="noindex" />
+  {if gtag_id}
+  {include('./template/gtag.html')}
+  {/if}
+  <style>
+  {include('./css/layout.css')}
+  {include('./css/reset.css')}
+  </style>
+  <link rel="preload" href="${/css/generate.css:/css/page.css,/css/markdown.css}" as="style">
+  <link rel="stylesheet" href="${/css/generate.css:/css/page.css,/css/markdown.css}" media="print" onload="this.media='all'">
+</head>
+<body>
+  <header class="container">
+    <h1><a href="/">tenjuu99@blog</a></h1>
+  </header>
+  <main class="container">
+    {{MARKDOWN}}
+  </main>
+
+  <footer class="container">
+    <ul>
+      <li><a href="/about">about</a></li>
+      <li><a href="/privacy_policy">プライバシーポリシー</a></li>
+    </ul>
+  </footer>
+</body>
+</html>

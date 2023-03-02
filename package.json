@@ -4,14 +4,33 @@
   "description": "blog for tenjuu99",
   "main": "index.js",
   "scripts": {
+    "build": "node generate.js && node server.js",
+    "serve": "node server.js",
     "generate": "node generate.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npm-watch build"
+  },
+  "watch": {
+    "build": {
+      "patterns": [
+        "template/",
+        "helper/",
+        "lib/",
+        "data/",
+        "css/",
+        "generate.js"
+      ],
+      "extensions": "html,md,css,js",
+      "quite": true
+    }
   },
   "author": "AmashigeSeiji",
   "license": "MIT",
   "dependencies": {
-    "commander": "^10.0.0",
     "marked": "^4.2.12"
+  },
+  "devDependencies": {
+    "npm-watch": "^0.11.0"
   },
   "type": "module"
 }

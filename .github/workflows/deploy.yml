@@ -1,0 +1,41 @@
+name: Build html and deploy to S3
+on:
+  push:
+      branches:
+        - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: npm install
+        run: npm install --production
+
+      - name: Build
+        run: GTAG_ID=${{ secrets.GTAG_ID }} npm run generate
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 sync \
+          --region ap-northeast-1 \
+          --size-only \
+          --exclude .gitignore \
+          --exclude '*.css' \
+          --delete \
+          --metadata-directive REPLACE \
+          --cache-control "max-age=86400, no-cache, public" \
+          dist/ s3://blog.tenjuu.net/
+
+          aws s3 sync \
+          --region ap-northeast-1 \
+          --size-only \
+          --exclude .gitignore \
+          --delete \
+          --metadata-directive REPLACE \
+          --cache-control "max-age=86400, public" \
+          dist/css/ s3://blog.tenjuu.net/css/

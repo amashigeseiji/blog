@@ -1,6 +1,7 @@
 <!--
 title: 槍ヶ岳に登った記
 index: false
+noindex: true
 url: /yarigatake
 published: 1890-03-03 20:21
 modified: 1890-03-03 20:21

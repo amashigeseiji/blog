@@ -1,7 +1,7 @@
 <!--
 title: ブログはじめました
 url: /2023/03/first_commit
-published: 2023/03/13
+published: 2023/03/12
 -->
 
 ブログをはじめました。
